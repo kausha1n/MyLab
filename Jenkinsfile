@@ -31,18 +31,22 @@ pipeline{
 
         stage("Publish to Nexus"){
             steps {
-                nexusArtifactUploader artifacts: [[
-                        artifactId: "${ArtifactId}",
-                        classifier: "",
-                        file: "target/${ArtifactId}-${Version}.jar",
-                        type: "jar"
-                    ]],
-                     credentialsId: '3eecb0ec-0c6d-4ee2-ac91-c89b8e8f549c',
-                     groupId: "${GroupId}", 
-                     nexusUrl: '172.20.10.106:8081', nexusVersion: 'nexus3', 
-                     protocol: 'http', 
-                     repository: 'MyLab-SNAPSHOT', 
-                     version: "${Version}"
+                script {
+                    String NexusRepo = Version.endsWith("SNAPSHOT") ? "MyLab-SNAPSHOT": "MyLab-RELEASE"
+                    nexusArtifactUploader artifacts: [[
+                            artifactId: "${ArtifactId}",
+                            classifier: "",
+                            file: "target/${ArtifactId}-${Version}.jar",
+                            type: "jar"
+                        ]],
+                        credentialsId: '3eecb0ec-0c6d-4ee2-ac91-c89b8e8f549c',
+                        groupId: "${GroupId}", 
+                        nexusUrl: '172.20.10.106:8081', nexusVersion: 'nexus3', 
+                        protocol: 'http', 
+                        repository: "${NexusRepo}", 
+                        version: "${Version}"
+                }
+                
             }
         }
 
