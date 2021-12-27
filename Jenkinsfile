@@ -36,12 +36,12 @@ pipeline{
                     nexusArtifactUploader artifacts: [[
                             artifactId: "${ArtifactId}",
                             classifier: "",
-                            file: "target/${ArtifactId}-${Version}.jar",
-                            type: "jar"
+                            file: "target/${ArtifactId}-${Version}.war",
+                            type: "war"
                         ]],
-                        credentialsId: '3eecb0ec-0c6d-4ee2-ac91-c89b8e8f549c',
+                        credentialsId: '56d4602f-0a78-4ace-968a-019561a2ca02',
                         groupId: "${GroupId}", 
-                        nexusUrl: '172.20.10.106:8081', nexusVersion: 'nexus3', 
+                        nexusUrl: '172.20.10.226:8081', nexusVersion: 'nexus3', 
                         protocol: 'http', 
                         repository: "${NexusRepo}", 
                         version: "${Version}"
