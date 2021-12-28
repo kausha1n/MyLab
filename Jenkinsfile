@@ -79,5 +79,14 @@ pipeline{
                     verbose: false)])
             }
         }
+
+        stage("Sonarqube scan") {
+            steps {
+                echo "Source code published to sonarqube for static code analysis"
+                withSonarQubeEnv('sonarqube'){
+                    sh 'mvn sonar:sonar'
+                }
+            }
+        }
     }
 }
